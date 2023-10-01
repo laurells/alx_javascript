@@ -1,13 +1,12 @@
 #!/usr/bin/node
-
 class Rectangle {
     constructor(w, h) {
       if (w > 0 && h > 0) {
         this.width = w;
         this.height = h;
       } else {
-        this.width = undefined;
-        this.height = undefined;
+        Object.defineProperty(this, 'width', { value: undefined, writable: true });
+        Object.defineProperty(this, 'height', { value: undefined, writable: true });
       }
     }
   
@@ -21,4 +20,3 @@ class Rectangle {
   }
   
   module.exports = Rectangle;
-  
