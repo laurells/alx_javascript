@@ -8,4 +8,4 @@ class Square extends Square {
   }
 }
 
-module.exports = Square6;
+module.exports = Square;
