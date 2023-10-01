@@ -1,7 +1,8 @@
 class Rectangle {
-    constructor() {
-        // Constructor can be used to initialize properties if needed
-    }
-    
-    // You can add methods to the class here if necessary
+    // This is an empty class
 }
+
+// Creating an instance of Rectangle
+const r1 = new Rectangle();
+console.log(r1); // Outputs: Rectangle {}
+console.log(r1.constructor); // Outputs: [Class: Rectangle]
