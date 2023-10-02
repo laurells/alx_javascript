@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Example</title>
+</head>
+<body>
+    <h1>Cookie Example</h1>
+    <label for="firstname">First Name:</label>
+    <input type="text" id="firstname">
+    <br>
+    <label for="email">Email:</label>
+    <input type="text" id="email">
+    <br>
+    <button id="logInButton">Log me in</button>
+    <button id="showCookiesButton">Show the cookies</button>
+    <p id="cookiesParagraph"></p>
+
+    <script>
+        document.getElementById("logInButton").addEventListener("click", setCookies);
+        document.getElementById("showCookiesButton").addEventListener("click", showCookies);
+
+        function setCookies() {
+            const firstNameValue = document.getElementById("firstname").value;
+            const emailValue = document.getElementById("email").value;
+
+            // Calculate the expiration date for cookies (10 days from now)
+            const expirationDate = new Date();
+            expirationDate.setDate(expirationDate.getDate() + 10);
+
+            // Set cookies with expiration date
+            document.cookie = `firstname=${firstNameValue}; expires=${expirationDate.toUTCString()}; path=/`;
+            document.cookie = `email=${emailValue}; expires=${expirationDate.toUTCString()}; path=/`;
+        }
+
+        function getCookie(name) {
+            const cookies = document.cookie.split(';');
+            for (const cookie of cookies) {
+                const [cookieName, cookieValue] = cookie.trim().split('=');
+                if (cookieName === name) {
+                    return cookieValue;
+                }
+            }
+            return '';
+        }
+
+        function showCookies() {
+            const cookiesParagraph = document.getElementById("cookiesParagraph");
+            const email = getCookie('email');
+            const firstName = getCookie('firstname');
+
+            // Display cookies with email and firstname
+            cookiesParagraph.innerHTML = `Email: ${email} - Firstname: ${firstName}`;
+        }
+    </script>
+</body>
+</html>

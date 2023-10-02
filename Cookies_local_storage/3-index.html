@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Example</title>
+</head>
+<body>
+    <h1>Welcome</h1>
+    <div id="loginForm" style="display: none;">
+        <h2>Login</h2>
+        <label for="firstname">First Name:</label>
+        <input type="text" id="firstname">
+        <br>
+        <label for="email">Email:</label>
+        <input type="text" id="email">
+        <br>
+        <button id="logInButton">Log me in</button>
+        <button id="showCookiesButton">Show the cookies</button>
+    </div>
+
+    <script>
+        document.getElementById("logInButton").addEventListener("click", setCookies);
+        document.getElementById("showCookiesButton").addEventListener("click", showCookies);
+        document.body.onload = showWelcomeMessageOrForm;
+
+        function setCookies() {
+            const firstNameValue = document.getElementById("firstname").value;
+            const emailValue = document.getElementById("email").value;
+
+            // Calculate the expiration date for cookies (10 days from now)
+            const expirationDate = new Date();
+            expirationDate.setDate(expirationDate.getDate() + 10);
+
+            // Set cookies with expiration date
+            document.cookie = `firstname=${firstNameValue}; expires=${expirationDate.toUTCString()}; path=/`;
+            document.cookie = `email=${emailValue}; expires=${expirationDate.toUTCString()}; path=/`;
+
+            showWelcomeMessageOrForm();
+        }
+
+        function getCookie(name) {
+            const cookies = document.cookie.split(';');
+            for (const cookie of cookies) {
+                const [cookieName, cookieValue] = cookie.trim().split('=');
+                if (cookieName === name) {
+                    return cookieValue;
+                }
+            }
+            return '';
+        }
+
+        function showCookies() {
+            const cookiesParagraph = document.getElementById("cookiesParagraph");
+            const email = getCookie('email');
+            const firstName = getCookie('firstname');
+
+            // Display cookies with email and firstname
+            cookiesParagraph.innerHTML = `Email: ${email} - Firstname: ${firstName}`;
+        }
+
+        function showForm() {
+            const welcomeMessage = document.querySelector("h1");
+            const loginForm = document.getElementById("loginForm");
+
+            if (welcomeMessage) {
+                welcomeMessage.style.display = "none";
+            }
+
+            if (loginForm) {
+                loginForm.style.display = "block";
+            }
+        }
+
+        function hideForm() {
+            const loginForm = document.getElementById("loginForm");
+
+            if (loginForm) {
+                loginForm.style.display = "none";
+            }
+        }
+
+        function deleteCookiesAndShowForm() {
+            document.cookie = 'firstname=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+            document.cookie = 'email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+            showForm();
+        }
+
+        function showWelcomeMessageOrForm() {
+            const firstName = getCookie('firstname');
+
+            if (firstName) {
+                const welcomeMessage = document.createElement("h1");
+                welcomeMessage.textContent = `Welcome ${firstName} `;
+                const logoutLink = document.createElement("a");
+                logoutLink.textContent = "(logout)";
+                logoutLink.style.font = "italic normal 10px";
+                logoutLink.style.marginLeft = "10px";
+                logoutLink.href = "#";
+                logoutLink.onclick = deleteCookiesAndShowForm;
+                welcomeMessage.appendChild(logoutLink);
+
+                document.body.innerHTML = "";
+                document.body.appendChild(welcomeMessage);
+            } else {
+                showForm();
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Example</title>
+</head>
+<body>
+    <input type="text" id="firstname" placeholder="First Name">
+    <input type="text" id="email" placeholder="Email">
+    <button id="setCookies">Log me in</button>
+    <button id="showCookies">Show the cookies</button>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("setCookies").addEventListener("click", function () {
+                const firstname = document.getElementById("firstname").value;
+                const email = document.getElementById("email").value;
+
+                // Calculate the expiration date for cookies (10 days from now)
+                const expirationDate = new Date();
+                expirationDate.setDate(expirationDate.getDate() + 10);
+
+                // Set cookies with expiration date
+                document.cookie = `firstname=${firstname}; expires=${expirationDate.toUTCString()}`;
+                document.cookie = `email=${email}; expires=${expirationDate.toUTCString()}`;
+
+                alert("Cookies set successfully!");
+            });
+
+            document.getElementById("showCookies").addEventListener("click", function () {
+                const cookies = document.cookie.split("; ");
+                const cookiesDisplay = cookies.map(cookie => {
+                    const [name, value] = cookie.split("=");
+                    return `${name}: ${value}`;
+                }).join("\n");
+
+                const paragraph = document.createElement("p");
+                paragraph.textContent = `Cookies:\n${cookiesDisplay}`;
+
+                document.body.appendChild(paragraph);
+            });
+        });
+    </script>
+</body>
+</html>

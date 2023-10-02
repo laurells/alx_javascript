@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Shopping Cart</title>
+</head>
+<body>
+    <h2>Available products:</h2>
+    <ul id="productList"></ul>
+    
+    <h2>Your cart:</h2>
+    <div id="cart">
+        <p>Your cart is empty</p>
+    </div>
+
+    <script>
+        // Check if session storage is available
+        if (typeof(Storage) === "undefined") {
+            alert("Sorry, your browser does not support Web storage. Try again with a better one.");
+        } else {
+            // Array of available items
+            const availableItems = ["Shampoo", "Soap", "Sponge", "Water"];
+
+            // Function to get the cart from session storage
+            function getCartFromStorage() {
+                const cartJSON = sessionStorage.getItem("cart");
+                return cartJSON ? JSON.parse(cartJSON) : {};
+            }
+
+            // Function to add an item to the cart
+            function addItemToCart(item) {
+                const cart = getCartFromStorage();
+                cart[item] = (cart[item] || 0) + 1;
+                sessionStorage.setItem("cart", JSON.stringify(cart));
+                displayCart();
+            }
+
+            // Function to remove an item from the cart
+            function removeItemFromCart(item) {
+                const cart = getCartFromStorage();
+                delete cart[item];
+                sessionStorage.setItem("cart", JSON.stringify(cart));
+                displayCart();
+            }
+
+            // Function to clear the entire cart
+            function clearCart() {
+                sessionStorage.removeItem("cart");
+                displayCart();
+            }
+
+            // Function to create the store
+            function createStore() {
+                const productList = document.getElementById("productList");
+
+                // Loop through available items and create list items
+                availableItems.forEach(item => {
+                    const listItem = document.createElement("li");
+                    listItem.textContent = item;
+                    listItem.addEventListener("click", () => addItemToCart(item));
+                    productList.appendChild(listItem);
+                });
+            }
+
+            // Function to display the cart
+            function displayCart() {
+                const cartDiv = document.getElementById("cart");
+                const cart = getCartFromStorage();
+                const cartKeys = Object.keys(cart);
+
+                // Clear previous cart content
+                while (cartDiv.firstChild) {
+                    cartDiv.removeChild(cartDiv.firstChild);
+                }
+
+                // Add Clear my cart option
+                const clearCartButton = document.createElement("p");
+                clearCartButton.textContent = "Clear my cart";
+                clearCartButton.addEventListener("click", clearCart);
+                cartDiv.appendChild(clearCartButton);
+
+                // Display cart items
+                if (cartKeys.length === 0) {
+                    const emptyCartMsg = document.createElement("p");
+                    emptyCartMsg.textContent = "Your cart is empty";
+                    cartDiv.appendChild(emptyCartMsg);
+                } else {
+                    cartKeys.forEach(item => {
+                        const itemDiv = document.createElement("div");
+                        const itemInfo = document.createElement("p");
+                        const removeButton = document.createElement("button");
+
+                        itemInfo.textContent = `${item} x ${cart[item]}`;
+                        removeButton.textContent = "remove";
+                        removeButton.addEventListener("click", () => removeItemFromCart(item));
+
+                        itemDiv.appendChild(itemInfo);
+                        itemDiv.appendChild(removeButton);
+                        cartDiv.appendChild(itemDiv);
+                    });
+                }
+            }
+
+            // Call the functions to initialize the application
+            createStore();
+            displayCart();
+        }
+    </script>
+</body>
+</html>

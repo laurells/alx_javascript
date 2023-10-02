@@ -1,0 +1,11 @@
+{
+  "name": "cookies_local_storage",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server"
+  },
+  "author": "Laurels Echichinwo",
+  "license": "ISC"
+}
