@@ -16,10 +16,6 @@ request(url, (error, response) => {
     process.exit(1);
   }
 
-  // Check for a successful response
-  if (response.statusCode === 200) {
-    console.log(`Status Code: ${response.statusCode}`);
-  } else {
-    console.error(`Error: Status Code ${response.statusCode}`);
-  }
+  // Print the status code
+  console.log(`code: ${response.statusCode}`);
 });
