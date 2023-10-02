@@ -26,7 +26,7 @@ const jsonData = '{"name": "John", "age": 30}';
 const parsedData = JSON.parse(jsonData);
 
 // Convert JavaScript object to JSON string
-const javascriptObject = { name: 'Jane', age: 25 };
+const javascriptObject = { name: "Jane", age: 25 };
 const jsonString = JSON.stringify(javascriptObject);
 ```
 
@@ -36,24 +36,24 @@ To make HTTP requests in JavaScript, you can use libraries like `request` (for N
 
 ```javascript
 // Using Fetch API (in a web browser)
-fetch('https://api.example.com/data')
-  .then(response => response.json())
-  .then(data => console.log(data))
-  .catch(error => console.error('Error:', error));
+fetch("https://api.example.com/data")
+  .then((response) => response.json())
+  .then((data) => console.log(data))
+  .catch((error) => console.error("Error:", error));
 ```
 
 For Node.js using the `request` library:
 
 ```javascript
-const request = require('request');
+const request = require("request");
 
 // Making a GET request
-request('https://api.example.com/data', (error, response, body) => {
+request("https://api.example.com/data", (error, response, body) => {
   if (!error && response.statusCode === 200) {
     const data = JSON.parse(body);
     console.log(data);
   } else {
-    console.error('Error:', error);
+    console.error("Error:", error);
   }
 });
 ```
@@ -63,24 +63,24 @@ request('https://api.example.com/data', (error, response, body) => {
 In Node.js, you can read and write files using the built-in `fs` (File System) module. Here's an example of reading and writing a file:
 
 ```javascript
-const fs = require('fs');
+const fs = require("fs");
 
 // Reading a file
-fs.readFile('example.txt', 'utf8', (error, data) => {
+fs.readFile("example.txt", "utf8", (error, data) => {
   if (!error) {
-    console.log('File content:', data);
+    console.log("File content:", data);
   } else {
-    console.error('Error reading file:', error);
+    console.error("Error reading file:", error);
   }
 });
 
 // Writing to a file
-const contentToWrite = 'Hello, world!';
-fs.writeFile('output.txt', contentToWrite, 'utf8', error => {
+const contentToWrite = "Hello, world!";
+fs.writeFile("output.txt", contentToWrite, "utf8", (error) => {
   if (!error) {
-    console.log('File written successfully.');
+    console.log("File written successfully.");
   } else {
-    console.error('Error writing to file:', error);
+    console.error("Error writing to file:", error);
   }
 });
 ```

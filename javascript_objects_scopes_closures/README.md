@@ -1,5 +1,3 @@
-Certainly! Here's a README that covers the topics you mentioned:
-
 # JavaScript Programming
 
 ## Why JavaScript Programming is Amazing
